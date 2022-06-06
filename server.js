@@ -32,6 +32,12 @@ app.post('/api/images/upload', (req, res) => {
     form.parse(req, function(error, fields, file){
         const filepath = file.fileupload.filepath;
         const newpath = path.join(__dirname, file.fileupload.originalFilename);
+        //does this work?? 
+        if (typeof file.fileupload == 'undefined'){
+            res.sendStatus(404);
+            return
+        }
+
         fs.rename(filepath, newpath, function(){
             res.send(newpath);
         });
