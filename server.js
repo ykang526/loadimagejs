@@ -14,8 +14,18 @@ app.get('/', (req, res) => {
 
 app.get('/api/images/download/:imageName', (req, res) => {
     let imgName = req.params.imageName;
-    res.sendFile(`${__dirname}/${imgName}`);
-})
+    let imgPath = `${__dirname}/${imgName}`;
+
+    fs.access(imgPath, fs.F_OK, (err) => {
+        if(err) {
+            res.sendStatus(404);
+            return
+        }
+        res.sendFile(imgPath);
+    });
+
+
+});
 
 app.post('/api/images/upload', (req, res) => {
     let form = new formidable.IncomingForm();

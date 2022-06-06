@@ -19,14 +19,20 @@ window.onload = () => {
     }
 
     async function fileDownload() {
-        const imgName = document.getElementById('imgName').value;
-        let response = await fetch(`http://localhost:3000/api/images/download/${imgName}`, {
-            method: "GET"
-        });
+        try {
+            const imgName = document.getElementById('imgName').value;
+            let response = await fetch(`http://localhost:3000/api/images/download/${imgName}`, {
+                method: "GET"
+            });
 
-        let myImage = document.getElementById('downloadedImage');
-        let imgData = await response.blob();
-        let objectURL = URL.createObjectURL(imgData);
-        myImage.src = objectURL;
+            let myImage = document.getElementById('downloadedImage');
+            let imgData = await response.blob();
+            let objectURL = URL.createObjectURL(imgData);
+            myImage.src = objectURL;
+        }
+
+        catch(err) {
+            console.log(err)
+        }
     }
 }
